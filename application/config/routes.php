@@ -52,3 +52,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+// manage customer module routes 
+$route['create-customer'] = 'customer/index';
+$route['list-customer'] = 'customer/listcustomer';
+
+// current booking module routes 
+$route['create-customer'] = 'customer/index';
+$route['list-customer'] = 'customer/listcustomer';

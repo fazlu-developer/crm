@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>Welcome To Dashboard | Adminpanel</title>
+<title><?= $title;?></title>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 <link rel="icon" type="image/png" sizes="32x32" href="<?= base_url();?>assets/img/favicon.png">
 <link href="<?= base_url();?>assets/css/fontawesome.css" rel="stylesheet" />
