@@ -25,14 +25,19 @@
                                         <h4 class="mt-3 mb-1 fw-semibold text-white font-18">ADMIN PANEL</h4>   
                                     </div>
                                 </div>
+                                <?php if ($this->session->flashdata('error')) { ?>
+                                    <p class="disMes alert-warning">Please Check Your User Name,Password and Role Type Or Contact To Administrator</p>
+                                <?php } ?>
                                 <div class="card-body pt-0">                                    
-                                    <form class="my-4" method="post">            
+                                    <form class="my-4" method="post" action="<?= base_url('login/adminlogin');?>">            
 										<div class="form-floating mb-20px">
-                                        <input type="text" name="username" required class="form-control fs-13px h-45px" id="emailAddress" placeholder="USERNAME" />
+                                        <input type="text" name="username"  class="form-control fs-13px h-45px" id="emailAddress" value="<?= set_value('username');?>" placeholder="USERNAME" />
                                         <label for="emailAddress" class="d-flex align-items-center py-0">Username</label>
+                                        <span class="text-danger"><?= form_error('username');?></span>
                                         </div>
                                         <div class="form-floating mb-20px">
-                                        <input type="password" name="password" class="form-control fs-13px h-45px" id="password" placeholder="Password" />
+                                        <input type="password" name="password" class="form-control fs-13px h-45px" id="password" <?= set_value('password');?> placeholder="Password" />
+                                        <span class="text-danger"><?= form_error('password');?></span>
                                         <label for="password" class="d-flex align-items-center py-0">Password</label>
                                         </div>
                                         <div class="form-group mb-0 row">

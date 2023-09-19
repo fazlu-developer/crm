@@ -1,86 +1,45 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Login extends CI_Controller {
+class Login extends CI_Controller
+{
+    public function index()
+    {
+        $this->load->view('login/login-page');
+    }
+    public function adminlogin()
+    {
+    if(isset($_POST['login'])){
 
-	
-	public function index()
-	{	
-		$this->load->view('login/login-page');
-	}
-	public function adminLogin(){
-
-	//	print_r($_POST);die;
-		$username = $this->input->post('inputEmail');
-        $password = md5($this->input->post('inputPass'));
-       // $ddlLoginType = $this->input->post('ddlLoginType');
-       $ddlLoginType = 1;
-        $sess_data = array();
-        if ($ddlLoginType == 1) {
-            $data = array('username' => $username, 'password' => $password, 'user_type' => $ddlLoginType);
-            $tableName = 'tbl_login';
-            $this->load->model('admin/Login_Model');
-            $usedetails['result'] = $this->Login_Model->getData($tableName, $data);
-              
+        $this->form_validation->set_rules('username', 'Username', 'required');
+        $this->form_validation->set_rules('password', 'Password', 'required');
+        if($this->form_validation->run() == false) {
+            $this->load->view('login/login-page');
+        } else {
+            $username = $this->input->post('username');
+            $password = md5($this->input->post('password'));
+            $sess_data = array();
+            $data = array('username' => $username, 'password' => $password,'status'=>1);
+            $this->load->model('Login_Model');
+            $usedetails['result'] = $this->Login_Model->getData($data)[0];
             if (!empty($usedetails['result'])) {
-                $uid = $usedetails['result'][0]->id;
-                $name = $usedetails['result'][0]->name;
-                $username = $usedetails['result'][0]->username;
-                $user_type = $usedetails['result'][0]->user_type;
-                $user_status = $usedetails['result'][0]->status;
-                $mobile = $usedetails['result'][0]->mobile;
+                $uid = $usedetails['result']->id;
+                $name = $usedetails['result']->name;
+                $username = $usedetails['result']->username;
                 $sess_data = array(
                     'name' => $name,
                     'username' => $username,
-                    'user_type' => $user_type,
-                    'user_status' => $user_status,
-                    'mobile' => $mobile,
-                    'uid' => $uid,
+                    'id' => $uid,
                 );
-                
+    
                 $this->session->set_userdata('logindetails', $sess_data);
-
-                redirect(base_url().'Admin/Dashboard');
+                redirect(base_url().'dashboard');
             } else {
-
                 $this->session->set_flashdata('error', 'Please Check Your User Name,Password and Role Type Or Contact To Administrator');
-                redirect(base_url().'Admin/Auth');
-                
-            }
-        }else{
-
-            $data = array('username' => $username, 'password' => $password, 'user_type' => $ddlLoginType);
-            $tableName = 'tbl_login';
-            $this->load->model('admin/Login_Model');
-            $usedetails['result'] = $this->Login_Model->getData($tableName, $data);
-
-            if (!empty($usedetails['result'])) {
-                $uid = $usedetails['result'][0]->id;
-                $name = $usedetails['result'][0]->name;
-                $username = $usedetails['result'][0]->username;
-                $user_type = $usedetails['result'][0]->user_type;
-                $user_status = $usedetails['result'][0]->status;
-                $mobile = $usedetails['result'][0]->mobile;
-                $sess_data = array(
-                    'name' => $name,
-                    'username' => $username,
-                    'user_type' => $user_type,
-                    'user_status' => $user_status,
-                    'mobile' => $mobile,
-                    'uid' => $uid,
-                );
-           
-                $this->session->set_userdata('logindetails', $sess_data);
-               
-                redirect(base_url().'Admin/Dashboard');
-            } else {
-
-                $this->session->set_flashdata('error', 'Please Check Your User Name,Password and Role Type Or Contact To Administrator');
-                redirect(base_url().'Admin/Auth');
+                redirect(base_url().'login');
             }
         }
-
     }
-		
-	
+}
+
 }
