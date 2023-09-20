@@ -51,4 +51,10 @@
       <a href="<?=base_url();?>dashboard/logout" onClick="if(confirm('Are you sure you want to log out?')){ return true;} else { return false; }" class="dropdown-item">Log Out</a> </div>
     </div>
   </div>
+  <?php if(isset($_SESSION['success'])) {?>
+    <div class="alert alert-success"><?php echo $_SESSION['success']; ?></div>
+  <?php } ?>
+  <?php if(isset($_SESSION['error'])) {?>
+    <div class="alert alert-error"><?php echo $_SESSION['error']; ?></div>
+  <?php } ?>
 </div>

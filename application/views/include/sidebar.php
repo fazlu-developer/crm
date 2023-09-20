@@ -51,6 +51,24 @@
           </div>
         </div>
       </div>
+      <div class="menu-item has-sub"> <a href="javascript:;" class="menu-link">
+          <div class="menu-icon"> <i class="fas fa-list"></i> </div>
+          <div class="menu-text">Manage Location</div>
+          <div class="menu-caret"></div>
+        </a>
+      <div class="menu-submenu">
+          <div class="menu-item">
+            <a href="<?= base_url();?>setup/manage_state" class="menu-link">
+              <div class="menu-text">Manage State</div>
+            </a>
+          </div>
+          <div class="menu-item">
+            <a href="<?= base_url();?>setup/manage_city" class="menu-link">
+              <div class="menu-text">Manage City</div>
+            </a>
+          </div>
+        </div>
+      </div>
 
       <!-- <div class="menu-item">
         <a href="order" class="menu-link">

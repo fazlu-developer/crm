@@ -57,6 +57,14 @@
         });
 
       });
+setTimeout(function() {
+    $(".alert-success").hide('blind', {}, 500)
+}, 3000);
+
+setTimeout(function() {
+    $(".alert-error").hide('blind', {}, 500)
+}, 3000);
+</script>
     </script>
 
 </body>
