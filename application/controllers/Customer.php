@@ -19,7 +19,7 @@ class Customer extends CI_Controller{
         $this->load->view('customer/create');
         $this->load->view('include/footer');
     }
-    public function manage_state(){
+    public function listcustomer(){
         $data['name'] = $_SESSION['logindetails']['name'];
         $data['id'] = $_SESSION['logindetails']['id'];
         $data['username'] = $_SESSION['logindetails']['username'];
