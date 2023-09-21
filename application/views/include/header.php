@@ -45,7 +45,7 @@
     <div class="navbar-item navbar-user dropdown"> <a href="#" class="navbar-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown"> <img src="<?= base_url();?>assets/img/user.png" /> <span> <span class="d-none d-md-inline"><?= $name;?></span> <b class="caret"></b> </span> </a>
       <div class="dropdown-menu dropdown-menu-end me-1"> 
 		  <a href="javascript:;" class="dropdown-item">Edit Profile</a> 
-		  <a href="javascript:;" class="dropdown-item">Change Password</a> 
+		  <a href="<?=base_url()?>change-password" class="dropdown-item">Change Password</a> 
 		  <a href="manage-contact.php" class="dropdown-item">Setting</a>
       <div class="dropdown-divider"></div>
       <a href="<?=base_url();?>dashboard/logout" onClick="if(confirm('Are you sure you want to log out?')){ return true;} else { return false; }" class="dropdown-item">Log Out</a> </div>

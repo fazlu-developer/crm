@@ -8,4 +8,14 @@ class Login_Model extends CI_Model{
         return $query->result();
     }
 
+    public function updatepassword($pass){
+        $this->db->where('status',1);
+        $this->db->where('id',1);
+        $this->db->set('password',$pass);
+        if($this->db->update('tbl_users')){
+            return true;
+        }else
+        return false;
+    }
+
 }

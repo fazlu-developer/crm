@@ -61,3 +61,6 @@ $route['edit-customer'] = 'customer/index';
 // current booking module routes 
 $route['create-customer'] = 'customer/index';
 $route['list-customer'] = 'customer/listcustomer';
+
+// change password route 
+$route['change-password'] = 'changepassword';
