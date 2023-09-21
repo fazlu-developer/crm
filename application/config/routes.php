@@ -56,6 +56,7 @@ $route['translate_uri_dashes'] = FALSE;
 // manage customer module routes 
 $route['create-customer'] = 'customer/index';
 $route['list-customer'] = 'customer/listcustomer';
+$route['edit-customer'] = 'customer/index';
 
 // current booking module routes 
 $route['create-customer'] = 'customer/index';

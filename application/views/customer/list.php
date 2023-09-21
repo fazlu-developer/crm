@@ -25,6 +25,7 @@
 <th class="text-nowrap">Check in  time</th>
 <th class="text-nowrap">Check out time</th>
 <th class="text-nowrap">Checkout date</th>
+<th class="text-nowrap">Action</th>
 </tr>
 </thead>
 <tbody>
@@ -54,6 +55,7 @@ if(sizeof($customer_list)>0)
 <td><?=$customer->check_in_time?></td>
 <td><?=$customer->check_out_time?></td>
 <td><?=$customer->checkout_date?></td>
+<td><a href="<?=base_url();?>edit-customer?id=<?= base64_encode($customer->id);?>"><span class="fa fa-edit  text-warning" style="font-size: larger;"></span></a><a href="<?=base_url();?>customer/deletecustomer?id=<?= base64_encode($customer->id)?>" onclick=" return confirm('Are You Sure Delete This Data');"><span class="fa fa-trash mx-2 text-danger" style="font-size: larger;"></span></a></td>
 </tr>
 <?php } } ?>
 </tbody>

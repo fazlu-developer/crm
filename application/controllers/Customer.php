@@ -10,6 +10,11 @@ class Customer extends CI_Controller{
     }
 
     public function index(){
+        if($this->input->get('id')){
+            $id = $this->input->get('id');
+            $idG = base64_decode($id) ; 
+            $data['getcustomer'] =  $this->CustomerModel->getcustomer($idG)[0];
+        }
         $data['name'] = $_SESSION['logindetails']['name'];
         $data['id'] = $_SESSION['logindetails']['id'];
         $data['username'] = $_SESSION['logindetails']['username'];
@@ -19,7 +24,7 @@ class Customer extends CI_Controller{
         $this->load->view('customer/create');
         $this->load->view('include/footer');
     }
-    public function manage_state(){
+    public function listcustomer(){
         $data['name'] = $_SESSION['logindetails']['name'];
         $data['id'] = $_SESSION['logindetails']['id'];
         $data['username'] = $_SESSION['logindetails']['username'];
@@ -33,7 +38,6 @@ class Customer extends CI_Controller{
 
     public function addCustomer()
     {
-        // prx($_POST);
         $data['name'] = $_SESSION['logindetails']['name'];
         $data['id'] = $_SESSION['logindetails']['id'];
         $data['username'] = $_SESSION['logindetails']['username'];
@@ -80,5 +84,50 @@ class Customer extends CI_Controller{
             }
         }
     }
+    public function updateCustomer()
+    {   $id = $this->input->post('hidden_id');
+        $data = array(
+            'name'           => $this->input->post('name'),
+            'mobile'         => $this->input->post('mobile'),
+            'email'       => $this->input->post('email_id'),
+            'vehicle_type'   => $this->input->post('vehicle_type'),
+            'vehicle_number' => $this->input->post('vehicle_number'),
+            'check_in_time'  => $this->input->post('check_in_time'),
+            'check_out_time' => $this->input->post('check_out_time'),
+            'checkout_date'  => $this->input->post('date'),
+            'created_date'   => date('Y-m-d H:i:s')
+        );
+            if(!empty($data))
+            {
+                if($this->CustomerModel->updateCustomer($id,$data))
+                {
+                    $this->session->set_flashdata('success','Customer Updated Successfully!'); 
+                    redirect(base_url('list-customer'));
+
+                }
+                else
+                {
+                    $this->session->set_flashdata('error','Customer Not Updated'); 
+                    redirect(base_url('list-customer'));
+                }
+
+            }
+        }
+    
+
+
+    public function deletecustomer(){
+        $id = $this->input->get('id');
+        $idG = base64_decode($id) ; 
+        $delete = $this->CustomerModel->deletecustomer($idG);
+        if($delete){
+            $this->session->set_flashdata('success','Customer Deleted Successfully!'); 
+            redirect(base_url('list-customer'));
+        }else{
+            $this->session->set_flashdata('error','Customer Is Not Deleted!'); 
+            redirect(base_url('list-customer'));
+        }
+        }
+
 
 }

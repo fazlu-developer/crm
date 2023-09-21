@@ -16,6 +16,7 @@ class Customer_model extends CI_Model{
     {
         $data = array();
         $this->db->where("status",1);
+        $this->db->order_by('id','desc');
         $query = $this->db->get("tbl_customer");
         if($query->num_rows()>0)
         {
@@ -26,6 +27,34 @@ class Customer_model extends CI_Model{
             return $data;
         }
         return $data;
+    }
+
+    public function deletecustomer($id){
+        $this->db->where('id',$id);
+        $this->db->set('status',3);
+        if($this->db->update('tbl_customer')){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function getcustomer($id){
+        $this->db->where('status',1);
+        $this->db->where('id',$id);
+        $query = $this->db->get('tbl_customer');
+        return $query->result();
+    }
+
+    public function updateCustomer($id,$data){
+      $this->db->where('status',1);
+      $this->db->where('id',$id);
+      if($this->db->update('tbl_customer',$data)){
+        return true;
+      }else{
+        return false;
+      }
+      
     }
 
 }
