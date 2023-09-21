@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 20, 2023 at 07:12 PM
+-- Generation Time: Sep 21, 2023 at 07:08 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -35,6 +35,16 @@ CREATE TABLE `tbl_city` (
   `mod_date` datetime DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1-Active,2-InActive,3-Deleted'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_city`
+--
+
+INSERT INTO `tbl_city` (`id`, `state_id`, `title`, `created_date`, `mod_date`, `status`) VALUES
+(1, 13, 'East Delhi', '2023-09-21 18:00:37', '2023-09-21 19:04:26', 1),
+(2, 7, 'Rohtak', '2023-09-21 18:05:43', '2023-09-21 19:04:03', 1),
+(3, 12, 'Bhiwani', '2023-09-21 18:56:54', NULL, 1),
+(4, 13, 'kangra', '2023-09-21 18:57:54', NULL, 3);
 
 -- --------------------------------------------------------
 
@@ -84,14 +94,21 @@ CREATE TABLE `tbl_state` (
 --
 
 INSERT INTO `tbl_state` (`id`, `title`, `created_date`, `mod_date`, `status`) VALUES
-(1, 'Haryana', '2023-09-20 17:04:16', '2023-09-20 19:03:48', 1),
+(1, 'sdfgsdfgsd', '2023-09-20 17:04:16', '2023-09-21 17:12:15', 3),
 (2, 'Delhidsfgsdf', '2023-09-20 17:22:59', NULL, 3),
 (3, 'Delhidsfgsdfsgsdfgsdfdsg', '2023-09-20 17:23:33', NULL, 3),
 (4, 'Haryana', '2023-09-20 17:25:57', NULL, 3),
 (5, 'Haryana', '2023-09-20 17:26:09', NULL, 3),
 (6, 'gggggg', '2023-09-20 17:26:43', '2023-09-20 18:46:04', 3),
-(7, 'Delhi', '2023-09-20 19:08:36', NULL, 1),
-(8, 'Punjab', '2023-09-20 19:08:48', '2023-09-20 19:10:35', 1);
+(7, 'Delhi', '2023-09-20 19:08:36', '2023-09-21 17:20:05', 1),
+(8, 'Punjab sdf', '2023-09-20 19:08:48', '2023-09-21 17:12:39', 3),
+(9, 'sdgsd sfgsdfgsdf', '2023-09-21 16:46:29', '2023-09-21 16:46:36', 3),
+(10, 'Delhi fgsfdfg sdfgsdf', '2023-09-21 17:09:15', '2023-09-21 17:12:08', 3),
+(11, 'sdgsdfgsd', '2023-09-21 17:12:22', NULL, 3),
+(12, 'Haryana', '2023-09-21 17:12:50', NULL, 1),
+(13, 'Himachal Pardesh', '2023-09-21 17:12:59', NULL, 1),
+(14, 'Rajasthan', '2023-09-21 17:13:07', NULL, 1),
+(15, 'Uttar Pardesh', '2023-09-21 17:13:16', '2023-09-21 17:19:50', 2);
 
 -- --------------------------------------------------------
 
@@ -151,7 +168,7 @@ ALTER TABLE `tbl_users`
 -- AUTO_INCREMENT for table `tbl_city`
 --
 ALTER TABLE `tbl_city`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_customer`
@@ -163,7 +180,7 @@ ALTER TABLE `tbl_customer`
 -- AUTO_INCREMENT for table `tbl_state`
 --
 ALTER TABLE `tbl_state`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tbl_users`
