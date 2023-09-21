@@ -28,15 +28,15 @@ $action_url = "setup/addState";
                   <label class="form-label">State *</label>
                   <input class="form-control" type="text" name="state" placeholder="Enter Name" value="<?php if(@$detail->title) { echo $detail->title; } else { echo set_value('state'); } ?>" />
                   <input class="form-control" type="hidden" name="state_id" value="<?=@$id?>" />
-                  <span class="text-danger"><?= form_error('name');?></span>
+                  <span class="text-danger"><?= form_error('state');?></span>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="mb-3">
                   <label class="form-label">Status</label>
                   <select name="status" id="status" class="form-control" aria-label="Default select example">
-                    <option value="1" <?=(set_value('status')==1)?'selected':''?>>Active</option>
-                    <option value="2" <?=(set_value('status')==2)?'selected':''?>>InActive</option>
+                    <option value="1" <?php if(@$detail->status==1) { echo 'selected'; } else { echo (set_value('status')==1)?'selected':''; }?>>Active</option>
+                    <option value="2" <?php if(@$detail->status==2) { echo 'selected'; } else { echo (set_value('status')==2)?'selected':''; } ?>>InActive</option>
                   </select>
                   <span class="text-danger"><?= form_error('status');?></span>
                 </div>

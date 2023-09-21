@@ -39,9 +39,10 @@ class Setup extends CI_Controller{
 
     public function manage_city(){
         $data['name'] = $_SESSION['logindetails']['name'];
-        $data['id'] = $_SESSION['logindetails']['id'];
+        $data['user_id'] = $_SESSION['logindetails']['id'];
         $data['username'] = $_SESSION['logindetails']['username'];
-        $data['city_list'] = $this->SetupModel->getStateList();
+        $data['state_list'] = $this->SetupModel->getStateList(null,1);
+        $data['city_list'] = $this->SetupModel->getCityList();
         $data['title'] =  'Manage City';
         $this->load->view('include/header',$data);
         $this->load->view('include/sidebar');
@@ -55,6 +56,8 @@ class Setup extends CI_Controller{
     $data['username'] = $_SESSION['logindetails']['username'];
     $this->form_validation->set_rules('state', 'Enter State', 'required');
     $this->form_validation->set_rules('status', 'Select Status', 'required');
+    $data['state_list'] = $this->SetupModel->getStateList();
+    
     if($this->form_validation->run() == false) {
         $data['title'] =  'Manage State';
         $this->load->view('include/header',$data);
@@ -64,8 +67,7 @@ class Setup extends CI_Controller{
     } else { 
         $state = $this->input->post('state');
         $status = $this->input->post('status');
-        $id = base64_encode($this->input->post('state_id'));
-      
+        $id = $this->input->post('state_id');
         if($id)
         {
             $data = array(
@@ -80,7 +82,7 @@ class Setup extends CI_Controller{
             redirect(base_url('setup/manage_state'));
         }
         else
-        {
+        { 
             $this->SetupModel->EditState($data,$id);
             $this->session->set_flashdata('success','State Updated Successfully!'); 
             redirect(base_url('setup/manage_state'));
@@ -158,5 +160,128 @@ class Setup extends CI_Controller{
         redirect(base_url('setup/manage_state'));
        }
     }
+
+
+    public function addCity()
+    {
+    $data['name'] = $_SESSION['logindetails']['name'];
+    $data['user_id'] = $_SESSION['logindetails']['id'];
+    $data['username'] = $_SESSION['logindetails']['username'];
+    $this->form_validation->set_rules('state', 'Enter State', 'required');
+    $this->form_validation->set_rules('city', 'Enter City', 'required');
+    $this->form_validation->set_rules('status', 'Select Status', 'required');
+    $data['city_list'] = $this->SetupModel->getCityList();
+    $data['state_list'] = $this->SetupModel->getStateList();
+    
+    if($this->form_validation->run() == false) {
+        $data['title'] =  'Manage City';
+        $this->load->view('include/header',$data);
+        $this->load->view('include/sidebar');
+        $this->load->view('setup/manage-city');
+        $this->load->view('include/footer');
+    } else { 
+        $state = $this->input->post('state');
+        $city = $this->input->post('city');
+        $status = $this->input->post('status');
+        $id = $this->input->post('id');
+       
+        if($id)
+        {
+            $data = array(
+                'state_id'   => $state,
+                'title'      => $city,
+                'status'     => $status,
+                'mod_date'   => date('Y-m-d H:i:s')
+            );
+            
+        $checkCity = $this->SetupModel->checkCity($state,$id);
+        if(!empty($checkCity))
+        {
+            $this->session->set_flashdata('error','City already exist!'); 
+            redirect(base_url('setup/manage_city'));
+        }
+        else
+        { 
+            $this->SetupModel->EditCity($data,$id);
+            $this->session->set_flashdata('success','City Updated Successfully!'); 
+            redirect(base_url('setup/manage_city'));
+        }    
+        }
+        else
+        {
+        $data = array(
+            'state_id'       => $state,
+            'title'          => $city,
+            'status'         => $status,
+            'created_date'   => date('Y-m-d H:i:s')
+        );
+        if(!empty($data))
+        {
+            $checkCity = $this->SetupModel->checkCity($city);
+            if($checkCity)
+            {
+                $this->session->set_flashdata('error','City already exist!'); 
+                redirect(base_url('setup/manage_city'));
+            }
+            else
+            {    
+            if($this->SetupModel->addCity($data))
+            {
+                $this->session->set_flashdata('success','City Added Successfully!'); 
+                redirect(base_url('setup/manage_city'));
+
+            }
+            else
+            {
+                $this->session->set_flashdata('error','City Not Added'); 
+                redirect(base_url('setup/manage_city'));
+            }
+        }
+        }
+    }
+    }
+   }    
+
+
+   public function edit_city()
+   {
+   $data['name'] = $_SESSION['logindetails']['name'];
+   $data['id'] = $_SESSION['logindetails']['id'];
+   $data['username'] = $_SESSION['logindetails']['username'];
+   $id = base64_decode($this->input->get('id'));
+   if(empty($id))
+   {
+       redirect(base_url('setup/manage_city'));
+   }
+   $getCity = $this->SetupModel->getCityList($id)[0];
+   $data['state_list'] = $this->SetupModel->getStateList();
+   $data['city_list'] = $this->SetupModel->getCityList();
+   $data['id']   = $id;
+   $data['detail'] = $getCity;
+   $data['title'] =  'Manage City';
+   $this->load->view('include/header',$data);
+   $this->load->view('include/sidebar');
+   $this->load->view('setup/manage-city');
+   $this->load->view('include/footer');
+   
+   }
+
+   public function delete_city()
+   {
+       $id = base64_decode($this->input->get('id'));
+       if($id)
+       {
+       if($this->SetupModel->deleteCity($id,3))
+       {
+           $this->session->set_flashdata('success','City Delete'); 
+           redirect(base_url('setup/manage_city'));
+       }
+      }
+      else
+      {
+       redirect(base_url('setup/manage_city'));
+      }
+   }
+
 
 }
