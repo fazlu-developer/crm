@@ -7,6 +7,7 @@
 <script src="<?= base_url();?>assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js" type="text/javascript"></script>
 <script src="<?= base_url();?>assets/plugins/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js" type="text/javascript"></script>
 <script src="<?= base_url();?>assets/js/demo/table-manage-default.demo.js" type="text/javascript"></script>
+<!-- <script src="<?= base_url();?>assets/toast.js" type="text/javascript"></script> -->
 <script>
     var thispageurl = window.location.href;
     console.log(thispageurl)
@@ -21,12 +22,8 @@
 <script src="<?=base_url();?>toast.js"></script>
     <script>
       $( document ).ready(function() {
-        $.toast({
-            type: 'info',
-            title: 'Notice!',
-            content: 'Hello, world! This is a toast message.',
-            delay: 5000,
-        });
+           
+        
 
         $.toast({
             type: 'success',
