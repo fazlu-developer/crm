@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 21, 2023 at 07:08 PM
+-- Generation Time: Sep 24, 2023 at 03:47 PM
 -- Server version: 10.4.28-MariaDB
--- PHP Version: 8.0.28
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,32 @@ SET time_zone = "+00:00";
 --
 -- Database: `crm_project`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_booking`
+--
+
+CREATE TABLE `tbl_booking` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `vehicle_number` varchar(255) NOT NULL,
+  `state_id` int(11) NOT NULL COMMENT 'tbl_state.id',
+  `city_id` int(11) NOT NULL COMMENT 'tbl_city.id',
+  `created_date` varchar(255) DEFAULT NULL,
+  `mod_date` varchar(255) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1-Active,2-Inactive,3-Deleted'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_booking`
+--
+
+INSERT INTO `tbl_booking` (`id`, `name`, `vehicle_number`, `state_id`, `city_id`, `created_date`, `mod_date`, `status`) VALUES
+(1, 'fazlu', '3984983', 12, 3, '2023-09-24 15:46:00', NULL, 1),
+(2, 'rehman', '3204032ljksdlkfj', 12, 3, '2023-09-24 15:40:17', NULL, 1),
+(3, 'asdfjsfsf', 'lkjlklksdf', 13, 1, '2023-09-24 15:46:46', NULL, 3);
 
 -- --------------------------------------------------------
 
@@ -44,7 +70,8 @@ INSERT INTO `tbl_city` (`id`, `state_id`, `title`, `created_date`, `mod_date`, `
 (1, 13, 'East Delhi', '2023-09-21 18:00:37', '2023-09-21 19:04:26', 1),
 (2, 7, 'Rohtak', '2023-09-21 18:05:43', '2023-09-21 19:04:03', 1),
 (3, 12, 'Bhiwani', '2023-09-21 18:56:54', NULL, 1),
-(4, 13, 'kangra', '2023-09-21 18:57:54', NULL, 3);
+(4, 13, 'kangra', '2023-09-21 18:57:54', NULL, 3),
+(5, 7, 'delhi', '2023-09-24 14:43:32', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -71,9 +98,9 @@ CREATE TABLE `tbl_customer` (
 --
 
 INSERT INTO `tbl_customer` (`id`, `name`, `email`, `mobile`, `vehicle_type`, `vehicle_number`, `check_in_time`, `check_out_time`, `checkout_date`, `created_date`, `status`) VALUES
-(1, 'Amit Kumar', 'amitkumarbaghpur@gmail.com', '8222817455', 1, 'DL-4547', '10:34', '10:34', '2023-09-20', '2023-09-20 15:42:34', 1),
-(2, 'Sandeep Kumar', 'sandeep@gmail.com', '9898498498', 1, 'DL-4547', '09:47', '06:51', '2023-09-20', '2023-09-20 15:47:33', 1),
-(3, 'Sonu Kumar', 'sonu@gmail.com', '9849848498', 1, 'DL-5648', '10:50', '06:54', '2023-09-20', '2023-09-20 15:50:23', 1);
+(1, 'Amit Kumar', 'amitkumarbaghpur@gmail.com', '8222817455', 1, 'DL-4547', '10:34', '10:34', '2023-09-20', '2023-09-21 19:34:04', 3),
+(2, 'Sandeep Kumar', 'sandeep@gmail.com', '9898498498', 1, 'DL-4547', '09:47', '06:51', '2023-09-20', '2023-09-21 19:32:10', 1),
+(3, 'Sonu Kumar', 'sonu@gmail.com', '9849848498', 1, 'DL-5648', '10:50', '06:54', '2023-09-20', '2023-09-21 19:35:14', 1);
 
 -- --------------------------------------------------------
 
@@ -137,6 +164,12 @@ INSERT INTO `tbl_users` (`id`, `name`, `username`, `password`, `created_date`, `
 --
 
 --
+-- Indexes for table `tbl_booking`
+--
+ALTER TABLE `tbl_booking`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_city`
 --
 ALTER TABLE `tbl_city`
@@ -165,10 +198,16 @@ ALTER TABLE `tbl_users`
 --
 
 --
+-- AUTO_INCREMENT for table `tbl_booking`
+--
+ALTER TABLE `tbl_booking`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `tbl_city`
 --
 ALTER TABLE `tbl_city`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_customer`

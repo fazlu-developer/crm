@@ -28,7 +28,7 @@ class Customer extends CI_Controller{
         $data['name'] = $_SESSION['logindetails']['name'];
         $data['id'] = $_SESSION['logindetails']['id'];
         $data['username'] = $_SESSION['logindetails']['username'];
-        $data['title'] =  'Create Customer';
+        $data['title'] =  'List Customer';
         $data['customer_list'] = $this->CustomerModel->getCustomerList();
         $this->load->view('include/header',$data);
         $this->load->view('include/sidebar');
