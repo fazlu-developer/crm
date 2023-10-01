@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2023 at 03:47 PM
+-- Generation Time: Oct 01, 2023 at 07:10 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -105,6 +105,29 @@ INSERT INTO `tbl_customer` (`id`, `name`, `email`, `mobile`, `vehicle_type`, `ve
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_role`
+--
+
+CREATE TABLE `tbl_role` (
+  `id` int(11) NOT NULL,
+  `title` varchar(80) NOT NULL,
+  `created_date` datetime NOT NULL,
+  `mod_date` datetime NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1-Active,2-InActive,3-deleted'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_role`
+--
+
+INSERT INTO `tbl_role` (`id`, `title`, `created_date`, `mod_date`, `status`) VALUES
+(1, 'Super Admin', '2023-10-01 12:16:02', '0000-00-00 00:00:00', 1),
+(2, 'Agent ', '2023-10-01 12:16:07', '2023-10-01 12:17:30', 1),
+(3, 'Station User', '2023-10-01 12:16:20', '0000-00-00 00:00:00', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_state`
 --
 
@@ -182,6 +205,12 @@ ALTER TABLE `tbl_customer`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_role`
+--
+ALTER TABLE `tbl_role`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_state`
 --
 ALTER TABLE `tbl_state`
@@ -213,6 +242,12 @@ ALTER TABLE `tbl_city`
 -- AUTO_INCREMENT for table `tbl_customer`
 --
 ALTER TABLE `tbl_customer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tbl_role`
+--
+ALTER TABLE `tbl_role`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
