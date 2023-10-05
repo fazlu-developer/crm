@@ -30,7 +30,11 @@ class Booking extends CI_Controller{
         $data['id'] = $_SESSION['logindetails']['id'];
         $data['username'] = $_SESSION['logindetails']['username'];
         $data['title'] =  'List Booking';
+        if($_SESSION['logindetails']['role_id']==1){
         $data['booking_list'] = $this->BookingModel->getBookinglist();        
+        }else{
+        $data['booking_list'] = $this->BookingModel->getBookinglist_user($data['id']);        
+        }
         $this->load->view('include/header',$data);
         $this->load->view('include/sidebar');
         $this->load->view('booking/list');
@@ -56,6 +60,7 @@ class Booking extends CI_Controller{
         } else { 
              
             $data = array(
+                'user_id'        => $data['id'],
                 'name'           => $this->input->post('name'),
                 'vehicle_number' => $this->input->post('vehicle_number'),
                 'state_id' => $this->input->post('state_id'),
@@ -80,8 +85,13 @@ class Booking extends CI_Controller{
         }
     }
     public function updateBooking()
-    {   $id = $this->input->post('hidden_id');
+    {   
+        $data['name'] = $_SESSION['logindetails']['name'];
+        $data['id'] = $_SESSION['logindetails']['id'];
+        $data['username'] = $_SESSION['logindetails']['username'];
+        $id = $this->input->post('hidden_id');
         $data = array(
+            'user_id'        => $data['id'],
             'name'           => $this->input->post('name'),
             'vehicle_number' => $this->input->post('vehicle_number'),
             'state_id' => $this->input->post('state_id'),

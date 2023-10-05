@@ -33,12 +33,14 @@ class Login extends CI_Controller
             $usedetails['result'] = $this->Login_Model->getData($data)[0];
             if (!empty($usedetails['result'])) {
                 $uid = $usedetails['result']->id;
+                $role_id = $usedetails['result']->role_id;
                 $name = $usedetails['result']->name;
                 $username = $usedetails['result']->username;
                 $sess_data = array(
                     'name' => $name,
                     'username' => $username,
                     'id' => $uid,
+                    'role_id' => $role_id,
                 );
     
                 $this->session->set_userdata('logindetails', $sess_data);

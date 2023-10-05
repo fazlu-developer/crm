@@ -165,7 +165,7 @@ class Setup extends CI_Controller{
     public function addCity()
     {
     $data['name'] = $_SESSION['logindetails']['name'];
-    $data['user_id'] = $_SESSION['logindetails']['id'];
+    $data['id'] = $_SESSION['logindetails']['id'];
     $data['username'] = $_SESSION['logindetails']['username'];
     $this->form_validation->set_rules('state', 'Enter State', 'required');
     $this->form_validation->set_rules('city', 'Enter City', 'required');

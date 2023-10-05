@@ -2,19 +2,30 @@
 
 defined('BASEPATH')OR exit('direct script no access allowed');
 
-class Role_model extends CI_Model{
+class User_model extends CI_Model{
 
- public function getRoleList(){
-    $this->db->where('status',1);
-    $query = $this->db->get('tbl_role');
+ public function getUserList(){
+    $this->db->select('a.*,b.title as role_name ,c.title as state_name,d.title as city_name');
+    $this->db->join('tbl_role b','a.role_id=b.id','left');
+    $this->db->join('tbl_state c','a.state_id=c.id','left');
+    $this->db->join('tbl_city d','a.city_id=d.id','left');
+    $this->db->where('a.status',1);
+    $this->db->where('a.id !=',1);
+    $query = $this->db->get('tbl_users a');
     return $query->result();
  }
 
- public function deleteRole($id,$status){
+ public function getRole(){
+    $this->db->where('status',1);
+    $this->db->where('id !=',1);
+    $query =  $this->db->get('tbl_role');
+    return $query->result();
+ }
+ public function deleteUser($id,$status){
     $this->db->where('id',$id);
     $this->db->where('id !=',1);
     $this->db->set('status',$status);
-    if($this->db->update('tbl_role')){
+    if($this->db->update('tbl_users')){
         return true;
     }
     else{
@@ -22,30 +33,30 @@ class Role_model extends CI_Model{
     }
  }
 
- public function EditRole($id,$data){
+ public function EditUser($id,$data){
+    // echo $id; die;
     $this->db->where('id',$id);
-    $this->db->where('id !=',1);
-    if($this->db->update('tbl_role',$data)){
+    if($this->db->update('tbl_users',$data)){
         return true;
     }else{
         return false;
     }
  }
 
- public function checkRole($role,$id="")
+ public function checkUser($email,$id="")
  {
      $data = array();
      if($id)
      {
          $this->db->where("id!=",$id);
      }
-     if($role)
+     if($email)
      {
-         $this->db->where('title',$role);
+         $this->db->where('email',$email);
      }
      $this->db->where("status!=",3);
      $this->db->where("status",1);
-     $query = $this->db->get("tbl_role");
+     $query = $this->db->get("tbl_users");
     //  echo $this->db->last_query();
     //  die;
      if($query->num_rows()>0)
@@ -59,17 +70,17 @@ class Role_model extends CI_Model{
      return $data;
  }
 
-  public function addRole($data){
-    if($this->db->insert('tbl_role',$data)){
+  public function addUser($data){
+    if($this->db->insert('tbl_users',$data)){
         return true;
     }else{
         return false;
     }
   }
 
-  public function getRole($id){
+  public function getUser($id){
     $this->db->where('id',$id);
-    $query = $this->db->get('tbl_role');
+    $query = $this->db->get('tbl_users');
     return $query->result();
   }
 

@@ -29,7 +29,11 @@ class Customer extends CI_Controller{
         $data['id'] = $_SESSION['logindetails']['id'];
         $data['username'] = $_SESSION['logindetails']['username'];
         $data['title'] =  'List Customer';
+        if($_SESSION['logindetails']['role_id']==1){
         $data['customer_list'] = $this->CustomerModel->getCustomerList();
+        }else{
+        $data['customer_list'] = $this->CustomerModel->getCustomerList_user($data['id']);
+        }
         $this->load->view('include/header',$data);
         $this->load->view('include/sidebar');
         $this->load->view('customer/list');
@@ -57,6 +61,7 @@ class Customer extends CI_Controller{
         } else { 
              
             $data = array(
+                'user_id'        => $data['id'],
                 'name'           => $this->input->post('name'),
                 'mobile'         => $this->input->post('mobile'),
                 'email'       => $this->input->post('email_id'),
@@ -85,8 +90,13 @@ class Customer extends CI_Controller{
         }
     }
     public function updateCustomer()
-    {   $id = $this->input->post('hidden_id');
+    {        
+        $data['name'] = $_SESSION['logindetails']['name'];
+        $data['id'] = $_SESSION['logindetails']['id'];
+        $data['username'] = $_SESSION['logindetails']['username'];
+        $id = $this->input->post('hidden_id');
         $data = array(
+            'user_id'        => $data['id'],
             'name'           => $this->input->post('name'),
             'mobile'         => $this->input->post('mobile'),
             'email'       => $this->input->post('email_id'),

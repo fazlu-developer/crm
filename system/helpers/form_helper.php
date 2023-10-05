@@ -95,7 +95,7 @@ if ( ! function_exists('form_open'))
 		{
 			foreach ($hidden as $name => $value)
 			{
-				$form .= '<input type="hidden" name="'.$name.'" value="'.html_escape($value).'" />'."\n";
+				$form .= '<input type="text" name="'.$name.'" value="'.html_escape($value).'" />'."\n";
 			}
 		}
 
@@ -125,7 +125,7 @@ if ( ! function_exists('form_open'))
 			}
 
 			$form .= sprintf(
-				'%s<input type="hidden" name="%s" value="%s" />%s%s',
+				'%s<input type="text" name="%s" value="%s" />%s%s',
 				$prepend,
 				$CI->security->get_csrf_token_name(),
 				$CI->security->get_csrf_hash(),
@@ -203,7 +203,7 @@ if ( ! function_exists('form_hidden'))
 
 		if ( ! is_array($value))
 		{
-			$form .= '<input type="hidden" name="'.$name.'" value="'.html_escape($value)."\" />\n";
+			$form .= '<input type="text" name="'.$name.'" value="'.html_escape($value)."\" />\n";
 		}
 		else
 		{

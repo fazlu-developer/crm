@@ -26,6 +26,11 @@
               <div class="menu-text">Manage Role</div>
             </a>
           </div>
+          <div class="menu-item">
+            <a href="<?= base_url();?>user" class="menu-link">
+              <div class="menu-text">Manage User</div>
+            </a>
+          </div>
         </div>
       </div>
       <div class="menu-item has-sub"> <a href="javascript:;" class="menu-link">

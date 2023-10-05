@@ -22,6 +22,18 @@ class Booking_model extends CI_Model{
         return $query->result();
     }
 
+    public function getBookinglist_user($id)
+    {
+        $this->db->select('a.*,b.title as state,c.title as city');
+        $this->db->join('tbl_state b','a.state_id=b.id','left');
+        $this->db->join('tbl_city  c','a.city_id=c.id','left');
+        $this->db->where('a.status',1);
+        $this->db->where('a.user_id',$id);
+        $query = $this->db->get('tbl_booking a');
+        return $query->result();
+    }
+    
+
     public function deletebooking($id){
         $this->db->where('id',$id);
         $this->db->set('status',3);

@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('direct access no allowed');
 
-class Role extends CI_Controller{
+class user extends CI_Controller{
     
     function __construct()
     {
@@ -11,7 +11,8 @@ class Role extends CI_Controller{
         {
             redirect(base_url('login'));
         }
-        $this->load->model('Role_model','Role');
+        $this->load->model('User_model','User');
+        $this->load->model('Booking_model','BookingModel');
         
     }
 
@@ -19,81 +20,116 @@ class Role extends CI_Controller{
         $data['name'] = $_SESSION['logindetails']['name'];
         $data['user_id'] = $_SESSION['logindetails']['id'];
         $data['username'] = $_SESSION['logindetails']['username'];
-        $data['role_list'] = $this->Role->getRoleList();
-        $data['title'] =  'Manage Role';
+        $data['role_list'] = $this->User->getUserList();
+        $data['get_role'] = $this->User->getRole();
+        $data['getstate'] = $this->BookingModel->getstate();
+        $data['title'] =  'Manage User';
         $this->load->view('include/header',$data);
         $this->load->view('include/sidebar');
-        $this->load->view('role/index');
+        $this->load->view('user/index');
         $this->load->view('include/footer');
     }
 
-    public function addRole()
+    public function addUser()
     {
 
     $data['name'] = $_SESSION['logindetails']['name'];
     $data['id'] = $_SESSION['logindetails']['id'];
     $data['username'] = $_SESSION['logindetails']['username'];
-    $this->form_validation->set_rules('title', 'Enter Role', 'required');
+    $this->form_validation->set_rules('name', 'Enter Name', 'required');
+    $this->form_validation->set_rules('username', 'Enter User Name', 'required');
+    // $this->form_validation->set_rules('password', 'Enter Password', 'required');
+    $this->form_validation->set_rules('role', 'Select Role', 'required');
+    $this->form_validation->set_rules('state_id', 'Select State', 'required');
+    $this->form_validation->set_rules('city_id', 'Select City', 'required');
     $this->form_validation->set_rules('status', 'Select Status', 'required');
-    $data['role_list'] = $this->Role->getRoleList();
-    
+    $data['role_list'] = $this->User->getUserList();
+    $data['get_role'] = $this->User->getRole();
+    $data['getstate'] = $this->BookingModel->getstate();
     if($this->form_validation->run() == false) {
-        $data['title'] =  'Manage Role';
+        $data['title'] =  'Manage User';
         $this->load->view('include/header',$data);
         $this->load->view('include/sidebar');
-        $this->load->view('role/index');
+        $this->load->view('user/index');
         $this->load->view('include/footer');
     } else { 
-        $role = $this->input->post('title');
+        // prx($_POST);    
+        $name = $this->input->post('name');
+        $username = $this->input->post('username');
+        $password = md5($this->input->post('password'));
+        $email = $this->input->post('email');
+        $mobile = $this->input->post('mobile');
+        $address = $this->input->post('address');
+        $state_id = $this->input->post('state_id');
+        $city_id = $this->input->post('city_id');
+        $role = $this->input->post('role');
         $status = $this->input->post('status');
         $hidden_id = $this->input->post('hidden_id');
         if($hidden_id)
         {
             $data = array(
-                'title'      => $role,
+                'name'      => $name,
+                'username'      => $username,
+                'password'      => $password,
+                'email'      => $email,
+                'mobile'      => $mobile,
+                'address'      => $address,
+                'state_id'      => $state_id,
+                'city_id'      => $city_id,
+                'role_id'      => $role,
                 'status'     => $status,
                 'mod_date'   => date('Y-m-d H:i:s')
             );
-        $checkrole = $this->Role->checkRole($role,$hidden_id);
-        if(!empty($checkrole))
+        $checkuser = $this->User->checkUser($username,$hidden_id);
+        if(!empty($checkuser))
         {
-            $this->session->set_flashdata('error','Role already exist!'); 
-            redirect(base_url('role'));
+            $this->session->set_flashdata('error','User already exist!'); 
+            redirect(base_url('user'));
         }
         else
         { 
-            $this->Role->EditRole($hidden_id,$data);
-            $this->session->set_flashdata('success','Role Updated Successfully!'); 
-            redirect(base_url('role'));
+            $this->User->EditUser($hidden_id,$data);
+            // app_log_manage($data['id'],$hidden_id,json_encode($data));
+            $this->session->set_flashdata('success','User Updated Successfully!'); 
+            redirect(base_url('user'));
         }    
         }
         else
         {
         $data = array(
-            'title'          => $role,
+            'name'      => $name,
+            'username'      => $username,
+            'password'      => $password,
+            'email'      => $email,
+            'mobile'      => $mobile,
+            'address'      => $address,
+            'state_id'      => $state_id,
+            'city_id'      => $city_id,
+            'role_id'      => $role,
             'status'         => $status,
             'created_date'   => date('Y-m-d H:i:s')
         );
         if(!empty($data))
         {   
-            $checkrole = $this->Role->checkRole($role);
-            if($checkrole)
+            $checkuser = $this->User->checkUser($email);
+            if($checkuser)
             {   
-                $this->session->set_flashdata('error','Role already exist!'); 
-                redirect(base_url('role'));
+                $this->session->set_flashdata('error','User already exist!'); 
+                redirect(base_url('user'));
             }
             else
             {    
-            if($this->Role->addRole($data))
-            {
-                $this->session->set_flashdata('success','Role Added Successfully!'); 
-                redirect(base_url('role'));
+            if($this->User->addUser($data))
+            {   
+                // app_log_manage($data['id'],$this->db->insert_id(),json_encode($data));
+                $this->session->set_flashdata('success','User Added Successfully!'); 
+                redirect(base_url('user'));
 
             }
             else
             {
-                $this->session->set_flashdata('error','Role Not Added'); 
-                redirect(base_url('role'));
+                $this->session->set_flashdata('error','User Not Added'); 
+                redirect(base_url('user'));
             }
         }
         }
@@ -101,7 +137,7 @@ class Role extends CI_Controller{
     }
    }
 
-    public function edit_role()
+    public function edit_user()
     {
     $data['name'] = $_SESSION['logindetails']['name'];
     $data['id'] = $_SESSION['logindetails']['id'];
@@ -109,34 +145,36 @@ class Role extends CI_Controller{
     $id = base64_decode($this->input->get('id'));
     if(empty($id))
     {
-        redirect(base_url('role'));
+        redirect(base_url('user'));
     }
-    $getState = $this->Role->getRole($id)[0];
-    $data['role_list'] = $this->Role->getRoleList();
+    $getUser = $this->User->getUser($id)[0];
+    $data['get_role'] = $this->User->getRole();
+    $data['getstate'] = $this->BookingModel->getstate();
+    $data['role_list'] = $this->User->getUserList();
     $data['id']   = $id;
-    $data['detail'] = $getState;
-    $data['title'] =  'Manage State';
+    $data['detail'] = $getUser;
+    $data['title'] =  'Manage User';
     $this->load->view('include/header',$data);
     $this->load->view('include/sidebar');
-    $this->load->view('role/index');
+    $this->load->view('user/index');
     $this->load->view('include/footer');
     
     }
 
-    public function delete_role()
+    public function delete_user()
     {
         $id = base64_decode($this->input->get('id'));
         if($id)
         {
-        if($this->Role->deleteRole($id,3))
+        if($this->User->deleteUser($id,3))
         {
             $this->session->set_flashdata('success','Role Deleted Successfully'); 
-            redirect(base_url('role'));
+            redirect(base_url('user'));
         }
        }
        else
        {
-        redirect(base_url('role'));
+        redirect(base_url('user'));
        }
     }
 

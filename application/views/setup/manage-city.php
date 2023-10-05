@@ -5,7 +5,7 @@ $action_url = "setup/addCity";
     <div class="d-flex align-items-center mb-3">
         <div>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
+                <li class="breadcrumb-item"><a href="<?= base_url();?>">Home</a></li>
                 <li class="breadcrumb-item"><a href="javascript:;">Manage City</a></li>
                 <li class="breadcrumb-item active"><i class="fa fa-arrow-back"></i> city List</li>
             </ol>
